@@ -1,5 +1,5 @@
 {
-  "name": "angular-electron",
+  "name": "chumspeak",
   "version": "4.2.2",
   "description": "Angular 6 with Electron (Typescript + SASS + Hot Reload)",
   "homepage": "https://github.com/maximegris/angular-electron",
@@ -17,6 +17,7 @@
   "main": "main.js",
   "private": true,
   "scripts": {
+    "rebuild": "electron-rebuild -f -w node-ts3sdk-client",
     "postinstall": "npm run postinstall:electron && npx electron-builder install-app-deps",
     "postinstall:web": "node postinstall-web",
     "postinstall:electron": "node postinstall",
@@ -37,6 +38,9 @@
     "e2e": "npm run postinstall:web && ng e2e"
   },
   "dependencies": {
+    "node-ts3sdk-client": "^3.0.4-14",
+    "tern": "^0.22.2",
+    "yargs": "^12.0.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.6.3",
@@ -60,6 +64,7 @@
     "core-js": "2.5.6",
     "electron": "2.0.7",
     "electron-builder": "20.28.1",
+    "electron-rebuild": "^1.8.2",
     "electron-reload": "1.2.2",
     "jasmine-core": "3.1.0",
     "jasmine-spec-reporter": "4.2.1",
