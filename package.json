@@ -1,11 +1,11 @@
 {
-  "name": "chumspeak",
+  "name": "ChumSpeak",
   "version": "1.0.0",
   "description": "Angular 6 with Electron (Typescript + SASS + Hot Reload)",
   "homepage": "https://github.com/maximegris/angular-electron",
   "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
+    "name": "Adam Keenan",
+    "email": "adam.g.keenan@gmail.com"
   },
   "keywords": [
     "angular",

@@ -319,7 +319,9 @@ declare module 'node-ts3sdk-client' {
         'onClientMoveEvent' |
         'onServerErrorEvent'
     ;
-    export function on(message: EventNames, cb: any): any;
+    export function on(message: EventNames, cb: any): void;
+    export function on(message: 'onConnectStatusChangeEvent', cb: (schID: number, status: number, errno: number) => void): void;
+    export function on(message: 'onServerErrorEvent', cb: (schID: number, err: any, retCode: string, extraMsg: string) => void): void;
 
     export function openCaptureDevice(schID: number): any;
 

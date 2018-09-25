@@ -1,13 +1,81 @@
-<div class="container">
-  <label>Address</label>
-  <input type='text' [(ngModel)]='address' />
-  <label>Password</label>
-  <input type='text' [(ngModel)]='password' />
-  <label>Nickname</label>
-  <input type='text' [(ngModel)]='nickname' />
-  <br />
-  <button (click)='connect()'>Connect</button>
-  <button (click)='disconnect()'>Disconnect</button>
-  <button (click)='mute(true)'>Mute</button>
-  <button (click)='mute(false)'>Unmute</button>
+<div class='container'>
+  <div class='sidebar'>
+    <div>
+      <div>
+        <label>Address</label>
+        <input type='text' [(ngModel)]='address' />
+      </div>
+      <div class='clear'>
+        <label>Password</label>
+        <input type='text' [(ngModel)]='password' />
+      </div>
+      <div class='clear'>
+        <label>Nickname</label>
+        <input type='text' [(ngModel)]='nickname' />
+      </div>
+    </div>
+    <div class='clear'>
+      <div>
+        <button (click)='connect()'>Connect</button>
+        <button (click)='disconnect()'>Disconnect</button>
+      </div>
+      <div>
+        <button (click)='mute(true)'>Mute</button>
+        <button (click)='mute(false)'>Unmute</button>
+      </div>
+    </div>
+    Channels
+    <ul>
+      <li>#announcements</li>
+      <li>#random</li>
+      <li>#dankmemes</li>
+      <li></li>
+      <li>@General</li>
+      <ul>
+        <li>austin</li>
+      </ul>
+      <li>@YOCket League</li>
+      <ul>
+        <li>Adam</li>
+        <li>Alex</li>
+        <li>Matt</li>
+      </ul>
+      <li>@YOCraft</li>
+    </ul>
+  </div>
+
+  <div class='main'>
+    <div class='header'>#random</div>
+    <div #messageList class='messages'>
+      <div class='wrapper'>
+        <ng-container *ngFor='let i of count'>
+          <div class='message'>
+            <div class='content'>
+              <div class='name'>Josh <span class='time'>12:31 PM</span></div>
+              <div class='body'>Wow what a nice app you have</div>
+            </div>
+          </div>
+          <div class='message'>
+            <div class='content'>
+              <div class='name'>Adam <span class='time'>12:32 PM</span></div>
+              <div class='body'>Thanks, mate</div>
+            </div>
+          </div>
+        </ng-container>
+        <div class='message'>
+          <div class='content'>
+            <div class='name'>Adam <span class='time'>12:32 PM</span></div>
+            <div class='body'>
+              Im at the bottom, mate. This is going to be a really long message because I need to test wrapping and margins along the edges.
+              What's going on in your life? Are you doing well? How are the kids?
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='input'>
+      <input type='text' placeholder='Enter text here' />
+    </div>
+  </div>
 </div>

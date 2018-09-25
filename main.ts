@@ -1,10 +1,10 @@
-import { app, BrowserWindow, screen } from 'electron';
+import { app, BrowserWindow, screen, Menu, MenuItemConstructorOptions } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
-let win, serve;
+let win: BrowserWindow | null;
 const args = process.argv.slice(1);
-serve = args.some(val => val === '--serve');
+const serve = args.some(val => val === '--serve');
 
 function createWindow() {
 
@@ -12,11 +12,14 @@ function createWindow() {
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
 
   // Create the browser window.
+  const iconPath = path.join(__dirname, 'yoc.png');
+  console.log(iconPath);
   win = new BrowserWindow({
     x: 0,
     y: 0,
     width: size.width,
-    height: size.height
+    height: size.height,
+    icon: iconPath,
   });
 
   if (serve) {
@@ -31,6 +34,102 @@ function createWindow() {
       slashes: true
     }));
   }
+
+  const template: MenuItemConstructorOptions[] = [
+    {
+      label: 'File',
+      submenu: [
+        { role: 'quit' }
+      ],
+    },
+    {
+      label: 'Edit',
+      submenu: [
+        {role: 'undo'},
+        {role: 'redo'},
+        {type: 'separator'},
+        {role: 'cut'},
+        {role: 'copy'},
+        {role: 'paste'},
+        {role: 'pasteandmatchstyle'},
+        {role: 'delete'},
+        {role: 'selectall'}
+      ]
+    },
+    {
+      label: 'View',
+      submenu: [
+        {role: 'reload'},
+        {role: 'forcereload'},
+        {role: 'toggledevtools'},
+        {type: 'separator'},
+        {role: 'resetzoom'},
+        {role: 'zoomin'},
+        {role: 'zoomout'},
+        {type: 'separator'},
+        {role: 'togglefullscreen'}
+      ]
+    },
+    {
+      role: 'window',
+      submenu: [
+        {role: 'minimize'},
+        {role: 'close'}
+      ]
+    },
+    {
+      role: 'help',
+      submenu: [
+        {
+          label: 'Learn More',
+          click () { require('electron').shell.openExternal('https://electronjs.org'); }
+        }
+      ]
+    }
+  ];
+
+  if (process.platform === 'darwin') {
+    template.unshift({
+      label: app.getName(),
+      submenu: [
+        {role: 'about'},
+        {type: 'separator'},
+        {role: 'services', submenu: []},
+        {type: 'separator'},
+        {role: 'hide'},
+        {role: 'hideothers'},
+        {role: 'unhide'},
+        {type: 'separator'},
+        {role: 'quit'}
+      ]
+    });
+
+    template[0].label!.trimRight();
+
+    // Edit menu
+    (template[1].submenu! as MenuItemConstructorOptions[]).push(
+      {type: 'separator'},
+      {
+        label: 'Speech',
+        submenu: [
+          {role: 'startspeaking'},
+          {role: 'stopspeaking'}
+        ]
+      }
+    );
+
+    // Window menu
+    template[3].submenu = [
+      {role: 'close'},
+      {role: 'minimize'},
+      {role: 'zoom'},
+      {type: 'separator'},
+      {role: 'front'}
+    ];
+  }
+
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
 
   win.webContents.openDevTools();
 
