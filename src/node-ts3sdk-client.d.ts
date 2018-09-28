@@ -265,9 +265,23 @@ declare module 'node-ts3sdk-client' {
 
     export function getPlaybackModeList(): any;
 
-    export function getPreProcessorConfigValue(): any;
+    type ConfigValueKey =
+        'name' |
+        'denoise' |
+        'vad' |
+        'voiceactivation_level' |
+        'vad_extrabuffersize' |
+        'agc' |
+        'agc_level' |
+        'agc_max_gain' |
+        'echo_cancelling'
+    ;
+    type InfoValueKey =
+        'decibel_last_period'
+    ;
+    export function getPreProcessorConfigValue(schID: number, key: ConfigValueKey): any;
 
-    export function getPreProcessorInfoValueFloat(): any;
+    export function getPreProcessorInfoValueFloat(schID: number, key: InfoValueKey): any;
 
     export function getResourcePath(): any;
 
@@ -409,7 +423,7 @@ declare module 'node-ts3sdk-client' {
 
     export function setPlaybackConfigValue(): any;
 
-    export function setPreProcessorConfigValue(): any;
+    export function setPreProcessorConfigValue(schID: number, key: ConfigValueKey, val: any): any;
 
     export function setServerConnectionHandlerSpeedLimitDown(): any;
 

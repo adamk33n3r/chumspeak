@@ -19,6 +19,17 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     return Array(1000);
   }
 
+  public get VAD(): number {
+    return this.ts.getPreProcessorConfigValue(this.tss.schID, 'voiceactivation_level');
+  }
+  public set VAD(val: number) {
+    this.ts.setPreProcessorConfigValue(this.tss.schID, 'voiceactivation_level', val);
+  }
+
+  public currentDecibels: number = 0;
+
+  private vadTestID: number = 0;
+
   @ViewChild('messageList')
   public messageList!: ElementRef<HTMLElement>;
 
@@ -34,6 +45,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   public ngAfterViewInit() {
     console.log(this.messageList.nativeElement);
     // this.messageList.nativeElement.scrollTop = this.messageList.nativeElement.scrollHeight;
+    console.log(this.VAD);
   }
 
   public ngOnDestroy() {
@@ -51,6 +63,25 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   public mute(val: boolean) {
     this.ts.setClientSelfVariableAsInt(this.tss.schID, this.ts.ClientProperties.INPUT_MUTED, val ? 1 : 0);
     this.ts.flushClientSelfUpdates(this.tss.schID, '');
+  }
+
+  public startVADTest(): void {
+    if (this.vadTestID !== 0) {
+      return;
+    }
+
+    this.vadTestID = setInterval(() => {
+      this.currentDecibels = this.getCurrentDecibels();
+    });
+  }
+
+  public stopVADTest(): void {
+    clearInterval(this.vadTestID);
+    this.vadTestID = 0;
+  }
+
+  private getCurrentDecibels(): number {
+    return this.ts.getPreProcessorInfoValueFloat(this.tss.schID, 'decibel_last_period');
   }
 
 }

@@ -24,24 +24,34 @@
         <button (click)='mute(false)'>Unmute</button>
       </div>
     </div>
-    Channels
-    <ul>
-      <li>#announcements</li>
-      <li>#random</li>
-      <li>#dankmemes</li>
-      <li></li>
-      <li>@General</li>
+    <div class='clear'>
+      <label>Threshold</label>
+      <input type='range' min='-50' max='50' step='1' (change)='VAD = $event.target.value' />
+      <button type='button' (click)='startVADTest()'>Start Test</button>
+      <button type='button' (click)='stopVADTest()'>Stop Test</button>
+      <span>{{ currentDecibels > VAD }}</span>
+      <input type='range' min='-50' max='50' step='1' [(ngModel)]='currentDecibels' />
+    </div>
+    <div class='clear'>
+      Channels
       <ul>
-        <li>austin</li>
+        <li>#announcements</li>
+        <li>#random</li>
+        <li>#dankmemes</li>
+        <li></li>
+        <li>@General</li>
+        <ul>
+          <li>austin</li>
+        </ul>
+        <li>@YOCket League</li>
+        <ul>
+          <li>Adam</li>
+          <li>Alex</li>
+          <li>Matt</li>
+        </ul>
+        <li>@YOCraft</li>
       </ul>
-      <li>@YOCket League</li>
-      <ul>
-        <li>Adam</li>
-        <li>Alex</li>
-        <li>Matt</li>
-      </ul>
-      <li>@YOCraft</li>
-    </ul>
+    </div>
   </div>
 
   <div class='main'>
