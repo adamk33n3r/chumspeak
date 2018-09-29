@@ -51,6 +51,11 @@
         </ul>
         <li>@YOCraft</li>
       </ul>
+      <ul>
+        <li *ngFor="let item of channels | async">
+          {{ item.name }}
+        </li>
+      </ul>
     </div>
   </div>
 

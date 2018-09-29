@@ -13,7 +13,6 @@ function createWindow() {
 
   // Create the browser window.
   const iconPath = path.join(__dirname, 'yoc.png');
-  console.log(iconPath);
   win = new BrowserWindow({
     x: 0,
     y: 0,

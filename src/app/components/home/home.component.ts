@@ -1,8 +1,17 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth } from 'firebase/app';
+import { Observable } from 'rxjs';
+import * as TS from 'node-ts3sdk-client';
 
 import { TeamSpeakService } from '../../providers/teamspeak.service';
 
-import * as TS from 'node-ts3sdk-client';
+interface IChannel {
+  name: string;
+  description: string;
+  messages: [];
+}
 
 @Component({
   selector: 'app-home',
@@ -28,6 +37,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public currentDecibels: number = 0;
 
+  public channels: Observable<IChannel[]>;
+
   private vadTestID: number = 0;
 
   @ViewChild('messageList')
@@ -35,8 +46,14 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private ts: typeof TS;
 
-  constructor(private tss: TeamSpeakService) {
+  constructor(private tss: TeamSpeakService, private db: AngularFirestore, private authService: AngularFireAuth) {
     this.ts = tss.ts3client;
+
+    this.channels = db.collection<IChannel>('channels').valueChanges();
+    this.channels.subscribe((channels) => {
+      console.log('channel:', channels);
+    });
+
   }
 
   public ngOnInit() {
@@ -54,6 +71,16 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public connect() {
     this.tss.connect(this.address, this.password, this.nickname);
+
+    // this.db.collection<IChannel>('channels').add({
+    //   name: 'test',
+    //   description: 'this is descript',
+    //   messages: [],
+    // });
+    // this.authService.auth.signInWithEmailAndPassword('adam.g.keenan@gmail.com', 'password')
+    // .then((cred) => {
+    //   console.log(cred);
+    // });
   }
 
   public disconnect() {

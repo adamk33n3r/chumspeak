@@ -38,6 +38,8 @@
     "e2e": "npm run postinstall:web && ng e2e"
   },
   "dependencies": {
+    "@angular/fire": "^5.0.2",
+    "firebase": "^5.5.2",
     "node-ts3sdk-client": "^3.0.4-14",
     "tern": "^0.22.2",
     "yargs": "^12.0.2"
