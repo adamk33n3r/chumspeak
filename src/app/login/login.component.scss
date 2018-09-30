@@ -1,0 +1,19 @@
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.title {
+    position: absolute;
+    width: 100%;
+    margin-top: 150px;
+    background: #0066cc;
+    padding: 40px;
+    color: white;
+
+    h1 {
+        margin: 0;
+    }
+}

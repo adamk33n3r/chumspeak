@@ -1,4 +1,4 @@
-<div class='container'>
+<div class='app-container'>
   <div class='sidebar'>
     <div>
       <div>
@@ -56,6 +56,8 @@
           {{ item.name }}
         </li>
       </ul>
+      <button routerLink='/logout'>Logout</button>
+      {{ user?.email }}
     </div>
   </div>
 

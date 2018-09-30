@@ -10,7 +10,7 @@ import { TeamSpeakService } from '../../providers/teamspeak.service';
 interface IChannel {
   name: string;
   description: string;
-  messages: [];
+  messages: any[];
 }
 
 @Component({
@@ -39,6 +39,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public channels: Observable<IChannel[]>;
 
+  public get user() {
+    return this.$auth.auth.currentUser;
+  }
+
   private vadTestID: number = 0;
 
   @ViewChild('messageList')
@@ -46,12 +50,16 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private ts: typeof TS;
 
-  constructor(private tss: TeamSpeakService, private db: AngularFirestore, private authService: AngularFireAuth) {
+  constructor(private tss: TeamSpeakService, private db: AngularFirestore, private $auth: AngularFireAuth) {
     this.ts = tss.ts3client;
 
     this.channels = db.collection<IChannel>('channels').valueChanges();
     this.channels.subscribe((channels) => {
       console.log('channel:', channels);
+    });
+
+    this.$auth.auth.onAuthStateChanged((user) => {
+      console.log('onAuthStateChanged:', user);
     });
 
   }
