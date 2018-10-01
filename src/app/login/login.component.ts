@@ -47,11 +47,12 @@ export class LoginComponent implements OnInit {
       console.log('new user:', cred.user);
       if (cred.user) {
         const uid = cred.user.uid;
-        cred.user.sendEmailVerification();
         Promise.all([
           cred.user.updateProfile({
             displayName: displayName,
             photoURL: null,
+          }).then(() => {
+            cred.user!.sendEmailVerification();
           }),
           this.$db.collection('users').add({
             uid: uid,
