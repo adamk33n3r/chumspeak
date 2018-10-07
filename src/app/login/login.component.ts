@@ -54,8 +54,7 @@ export class LoginComponent implements OnInit {
           }).then(() => {
             cred.user!.sendEmailVerification();
           }),
-          this.$db.collection('users').add({
-            uid: uid,
+          this.$db.collection('users').doc(uid).set({
             displayName: displayName,
             username: displayName,
           }),

@@ -6,15 +6,16 @@ import { Observable } from 'rxjs';
 import * as TS from 'node-ts3sdk-client';
 
 import { TeamSpeakService } from '../../providers/teamspeak.service';
+import { map } from 'rxjs/operators';
 
-interface IChannel {
+export interface IChannel {
+  id: string;
   name: string;
   description: string;
   messages: any[];
 }
 
 @Component({
-  selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
@@ -24,8 +25,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   public password: string = 'secret';
   public nickname: string = 'Adam';
 
+  public selectedChannel: string | null = null;
+
   public get count(): number[] {
-    return Array(1000);
+    return Array(0);
   }
 
   public get VAD(): number {
@@ -45,17 +48,21 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private vadTestID: number = 0;
 
-  @ViewChild('messageList')
-  public messageList!: ElementRef<HTMLElement>;
-
   private ts: typeof TS;
 
   constructor(private tss: TeamSpeakService, private db: AngularFirestore, private $auth: AngularFireAuth) {
     this.ts = tss.ts3client;
 
-    this.channels = db.collection<IChannel>('channels').valueChanges();
+    this.channels = db.collection<IChannel>('channels').snapshotChanges().pipe(map((changes) => {
+      return changes.map((change) => {
+        const doc = change.payload.doc;
+        return { id: doc.id, ...doc.data() };
+      });
+    }));
+    // this.channels = db.collection<IChannel>('channels').valueChanges();
     this.channels.subscribe((channels) => {
-      console.log('channel:', channels);
+      console.log('channels:', channels);
+      this.selectedChannel = channels[0].id;
     });
 
     this.$auth.auth.onAuthStateChanged((user) => {
@@ -68,7 +75,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public ngAfterViewInit() {
-    console.log(this.messageList.nativeElement);
     // this.messageList.nativeElement.scrollTop = this.messageList.nativeElement.scrollHeight;
     console.log(this.VAD);
   }
@@ -113,6 +119,13 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   public stopVADTest(): void {
     clearInterval(this.vadTestID);
     this.vadTestID = 0;
+  }
+
+  public newChannel() {}
+
+  public switchToChannel(channel: IChannel) {
+    console.log(channel);
+    this.selectedChannel = channel.id;
   }
 
   private getCurrentDecibels(): number {

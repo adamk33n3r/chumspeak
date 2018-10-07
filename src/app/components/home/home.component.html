@@ -33,12 +33,14 @@
       <input type='range' min='-50' max='50' step='1' [(ngModel)]='currentDecibels' />
     </div>
     <div class='clear'>
-      Channels
+      Channels <i class='fa fa-plus-circle pointer new-channel' (click)='newChannel()'></i>
+      <ul class='channels'>
+        <li class='channel' *ngFor='let channel of channels | async' (click)='switchToChannel(channel)'>
+          #{{ channel.name }}
+        </li>
+      </ul>
+      Voice
       <ul>
-        <li>#announcements</li>
-        <li>#random</li>
-        <li>#dankmemes</li>
-        <li></li>
         <li>@General</li>
         <ul>
           <li>austin</li>
@@ -51,48 +53,10 @@
         </ul>
         <li>@YOCraft</li>
       </ul>
-      <ul>
-        <li *ngFor="let item of channels | async">
-          {{ item.name }}
-        </li>
-      </ul>
       <button routerLink='/logout'>Logout</button>
       {{ user?.email }}
     </div>
   </div>
 
-  <div class='main'>
-    <div class='header'>#random</div>
-    <div #messageList class='messages'>
-      <div class='wrapper'>
-        <ng-container *ngFor='let i of count'>
-          <div class='message'>
-            <div class='content'>
-              <div class='name'>Josh <span class='time'>12:31 PM</span></div>
-              <div class='body'>Wow what a nice app you have</div>
-            </div>
-          </div>
-          <div class='message'>
-            <div class='content'>
-              <div class='name'>Adam <span class='time'>12:32 PM</span></div>
-              <div class='body'>Thanks, mate</div>
-            </div>
-          </div>
-        </ng-container>
-        <div class='message'>
-          <div class='content'>
-            <div class='name'>Adam <span class='time'>12:32 PM</span></div>
-            <div class='body'>
-              Im at the bottom, mate. This is going to be a really long message because I need to test wrapping and margins along the edges.
-              What's going on in your life? Are you doing well? How are the kids?
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class='input'>
-      <input type='text' placeholder='Enter text here' />
-    </div>
-  </div>
+  <chum-channel class='main' [id]='selectedChannel'></chum-channel>
 </div>

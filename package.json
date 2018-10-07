@@ -57,6 +57,7 @@
     "@angular/platform-browser": "6.1.2",
     "@angular/platform-browser-dynamic": "6.1.2",
     "@angular/router": "6.1.2",
+    "@fortawesome/fontawesome-free": "^5.3.1",
     "@ngx-translate/core": "10.0.1",
     "@ngx-translate/http-loader": "3.0.1",
     "@types/jasmine": "2.8.7",

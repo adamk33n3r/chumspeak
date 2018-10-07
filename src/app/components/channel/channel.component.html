@@ -1,0 +1,33 @@
+<div class='channel-wrapper'>
+  <div class='header'>
+    <div class='name'>#{{ (channel | async)?.name }}</div>
+    <div class='description'>{{ (channel | async)?.description }}</div>
+  </div>
+
+  <div #messageList class='messages'>
+    <div class='wrapper'>
+      <div class='message' *ngFor='let message of messages | async'>
+        <div class='content'>
+          <div class='name'>{{ message.said_by.displayName }} <span class='time'>{{ message.timestamp | date }}</span></div>
+          <div class='body'>{{ message.body }}</div>
+        </div>
+      </div>
+      <!--
+      <div class='message'>
+        <div class='content'>
+          <div class='name'>Adam <span class='time'>12:32 PM</span></div>
+          <div class='body'>
+            Im at the bottom, mate. This is going to be a really long message because I need to test wrapping and margins along the edges.
+            What's going on in your life? Are you doing well? How are the kids?
+          </div>
+        </div>
+      </div>
+      -->
+    </div>
+  </div>
+
+  <div class='input'>
+    <input type='text' placeholder='Enter text here' [(ngModel)]='messageText' (keydown)='onInputKeydown($event)' />
+  </div>
+
+</div>
