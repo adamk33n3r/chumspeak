@@ -27,7 +27,9 @@
   </div>
 
   <div class='input'>
-    <input type='text' placeholder='Enter text here' [(ngModel)]='messageText' (keydown)='onInputKeydown($event)' />
+    <mat-form-field appearance='outline'>
+      <textarea matInput placeholder='Enter text here' maxlength='1000' [(ngModel)]='messageText' (keydown)='onInputKeydown($event)'></textarea>
+    </mat-form-field>
   </div>
 
 </div>

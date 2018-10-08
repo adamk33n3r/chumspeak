@@ -108,7 +108,9 @@ export class ChannelComponent implements OnInit, OnChanges {
   }
 
   public onInputKeydown(event: KeyboardEvent) {
-    if (event.key === 'Enter') {
+    console.log(event);
+    if (event.key === 'Enter' && event.shiftKey === false) {
+      event.preventDefault();
       console.log('sending message:', this.messageText);
       this.channelRef.collection<IMessage>('messages').add(({
         body: this.messageText,
