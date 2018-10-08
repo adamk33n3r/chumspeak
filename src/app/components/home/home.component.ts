@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit, TemplateRef } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
@@ -7,6 +7,8 @@ import * as TS from 'node-ts3sdk-client';
 
 import { TeamSpeakService } from '../../providers/teamspeak.service';
 import { map } from 'rxjs/operators';
+import { MatDialog } from '@angular/material';
+import { NewChannelComponent } from '../../dialogs/new-channel/new-channel.component';
 
 export interface IChannel {
   id: string;
@@ -35,7 +37,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.ts.getPreProcessorConfigValue(this.tss.schID, 'voiceactivation_level');
   }
   public set VAD(val: number) {
-    this.ts.setPreProcessorConfigValue(this.tss.schID, 'voiceactivation_level', val);
+    this.ts.setPreProcessorConfigValue(this.tss.schID, 'voiceactivation_level', val.toString());
   }
 
   public currentDecibels: number = 0;
@@ -50,7 +52,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private ts: typeof TS;
 
-  constructor(private tss: TeamSpeakService, private db: AngularFirestore, private $auth: AngularFireAuth) {
+  constructor(
+    private tss: TeamSpeakService,
+    private db: AngularFirestore,
+    private $auth: AngularFireAuth,
+    private dialog: MatDialog,
+  ) {
     this.ts = tss.ts3client;
 
     this.channels = db.collection<IChannel>('channels').snapshotChanges().pipe(map((changes) => {
@@ -72,6 +79,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public ngOnInit() {
+    // setTimeout(() => this.newChannel(), 0);
   }
 
   public ngAfterViewInit() {
@@ -121,7 +129,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.vadTestID = 0;
   }
 
-  public newChannel() {}
+  public newChannel() {
+    const dialogRef = this.dialog.open(NewChannelComponent);
+    dialogRef.afterClosed().subscribe((data) => {
+      console.log('closed:', data);
+    });
+  }
 
   public switchToChannel(channel: IChannel) {
     console.log(channel);

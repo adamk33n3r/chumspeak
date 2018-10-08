@@ -11,8 +11,12 @@
     border-right: 3px solid red;
     flex: 0 0 300px;
 
+    mat-form-field {
+      width: 100%;
+    }
+
     .new-channel {
-      font-size: 1.5em;
+      // font-size: 1.5em;
 
       &:hover {
         color: white;
@@ -31,15 +35,15 @@
     }
 
     button {
-      cursor: pointer;
-      border: 2px solid darken(tomato, 25%);
-      margin: 1px;
-      background: tomato;
-      border-radius: 5px;
-      padding: 10px 20px;
-      &:hover {
-        background: darken(tomato, 5%);
-      }
+      // cursor: pointer;
+      // border: 2px solid darken(tomato, 25%);
+      margin: 5px;
+      // background: tomato;
+      // border-radius: 5px;
+      // padding: 10px 20px;
+      // &:hover {
+      //   background: darken(tomato, 5%);
+      // }
     }
 
     label {

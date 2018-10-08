@@ -26,6 +26,9 @@
       .wrapper {
         .message {
           padding: 6px 0;
+          &:hover {
+            background: rgba(0, 0, 0, 0.1);
+          }
           // position: absolute;
           // bottom: 0;
           // height: 100%;

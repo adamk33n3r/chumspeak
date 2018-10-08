@@ -82,7 +82,9 @@ export class ChannelComponent implements OnInit, OnChanges {
     });
 
     this.messages = this.channelRef
-      .collection<IMessage>('messages')
+      .collection<IMessage>('messages', (query) => {
+        return query.orderBy('timestamp');
+      })
       .valueChanges()
       .pipe(
         map((messages) => {

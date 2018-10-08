@@ -1,39 +1,36 @@
 <div class='app-container'>
   <div class='sidebar'>
-    <div>
-      <div>
-        <label>Address</label>
-        <input type='text' [(ngModel)]='address' />
-      </div>
-      <div class='clear'>
-        <label>Password</label>
-        <input type='text' [(ngModel)]='password' />
-      </div>
-      <div class='clear'>
-        <label>Nickname</label>
-        <input type='text' [(ngModel)]='nickname' />
-      </div>
-    </div>
+    <mat-form-field>
+      <input type='text' matInput placeholder='Address' [(ngModel)]='address' />
+    </mat-form-field>
+    <mat-form-field>
+      <input type='text' matInput placeholder='Password' [(ngModel)]='password' />
+    </mat-form-field>
+    <mat-form-field>
+      <input type='text' matInput placeholder='Nickname' [(ngModel)]='nickname' />
+    </mat-form-field>
     <div class='clear'>
       <div>
-        <button (click)='connect()'>Connect</button>
-        <button (click)='disconnect()'>Disconnect</button>
+        <button type='button' mat-raised-button color='primary' (click)='connect()'>Connect</button>
+        <button type='button' mat-raised-button color='primary' (click)='disconnect()'>Disconnect</button>
       </div>
       <div>
-        <button (click)='mute(true)'>Mute</button>
-        <button (click)='mute(false)'>Unmute</button>
+        <button type='button' mat-raised-button color='primary' (click)='mute(true)'>Mute</button>
+        <button type='button' mat-raised-button color='primary' (click)='mute(false)'>Unmute</button>
       </div>
     </div>
     <div class='clear'>
       <label>Threshold</label>
-      <input type='range' min='-50' max='50' step='1' (change)='VAD = $event.target.value' />
-      <button type='button' (click)='startVADTest()'>Start Test</button>
-      <button type='button' (click)='stopVADTest()'>Stop Test</button>
+      <!-- <input type='range' min='-50' max='50' step='1' (change)='VAD = $event.target.value' /> -->
+      <mat-slider [min]='-50' [max]='50' [step]='1' [tickInterval]='5' [thumbLabel]='true' value='0' (change)='VAD = $event.value'></mat-slider>
+      <button type='button' mat-raised-button color='primary' (click)='startVADTest()'>Start Test</button>
+      <button type='button' mat-raised-button color='primary' (click)='stopVADTest()'>Stop Test</button>
       <span>{{ currentDecibels > VAD }}</span>
-      <input type='range' min='-50' max='50' step='1' [(ngModel)]='currentDecibels' />
+      <!-- <input type='range' min='-50' max='50' step='1' [(ngModel)]='currentDecibels' /> -->
+      <mat-slider [min]='-50' [max]='50' [step]='1' [(ngModel)]='currentDecibels'></mat-slider>
     </div>
     <div class='clear'>
-      Channels <i class='fa fa-plus-circle pointer new-channel' (click)='newChannel()'></i>
+      Channels <button mat-icon-button (click)='newChannel()'><mat-icon class='pointer new-channel' [inline]='true'>add_circle</mat-icon></button>
       <ul class='channels'>
         <li class='channel' *ngFor='let channel of channels | async' (click)='switchToChannel(channel)'>
           #{{ channel.name }}
@@ -53,7 +50,7 @@
         </ul>
         <li>@YOCraft</li>
       </ul>
-      <button routerLink='/logout'>Logout</button>
+      <button mat-raised-button color='warn' routerLink='/logout'>Logout</button>
       {{ user?.email }}
     </div>
   </div>

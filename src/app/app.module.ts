@@ -1,7 +1,9 @@
 import 'zone.js/dist/zone-mix';
 import 'reflect-metadata';
 import '../polyfills';
+
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
@@ -9,6 +11,10 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+
+import {
+  MatButtonModule, MatCheckboxModule, MatDialogModule,
+} from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -25,6 +31,8 @@ import { AppConfig } from '../environments/environment';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { ChannelComponent } from './components/channel/channel.component';
+import { MaterialModule } from './material.module';
+import { DialogsModule } from './dialogs/dialogs.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -41,6 +49,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    // NoopAnimationsModule,
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
@@ -54,7 +64,11 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: (HttpLoaderFactory),
         deps: [HttpClient]
       }
-    })
+    }),
+
+    MaterialModule,
+    DialogsModule,
+
   ],
   providers: [ElectronService],
   bootstrap: [AppComponent]
