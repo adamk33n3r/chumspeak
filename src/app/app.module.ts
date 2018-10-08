@@ -33,6 +33,7 @@ import { LogoutComponent } from './logout/logout.component';
 import { ChannelComponent } from './components/channel/channel.component';
 import { MaterialModule } from './material.module';
 import { DialogsModule } from './dialogs/dialogs.module';
+import { GravitarPipe } from './pipes/gravitar.pipe';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -46,6 +47,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoginComponent,
     LogoutComponent,
     ChannelComponent,
+
+    GravitarPipe,
   ],
   imports: [
     BrowserModule,

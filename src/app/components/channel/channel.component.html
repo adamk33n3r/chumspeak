@@ -7,7 +7,7 @@
   <div #messageList class='messages'>
     <mat-list class='wrapper'>
       <mat-list-item class='message' *ngFor='let message of messages | async'>
-        <img matListAvatar src='https://www.gravatar.com/avatar/8ff80d09c3fa40407cba8a9efc0dd6d2?d=monsterid' />
+        <img matListAvatar [src]='message.said_by.email | gravitar' />
         <!-- <div class='content' matLine>
           <div class='name'>{{ message.said_by.displayName }} <span class='time'>{{ message.timestamp | date: 'medium' }}</span></div>
           <div class='body'>{{ message.body }}</div>
