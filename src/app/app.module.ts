@@ -45,7 +45,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HomeComponent,
     LoginComponent,
     LogoutComponent,
-    ChannelComponent
+    ChannelComponent,
   ],
   imports: [
     BrowserModule,

@@ -8,7 +8,7 @@
     <div class='wrapper'>
       <div class='message' *ngFor='let message of messages | async'>
         <div class='content'>
-          <div class='name'>{{ message.said_by.displayName }} <span class='time'>{{ message.timestamp | date }}</span></div>
+          <div class='name'>{{ message.said_by.displayName }} <span class='time'>{{ message.timestamp | date: 'medium' }}</span></div>
           <div class='body'>{{ message.body }}</div>
         </div>
       </div>
