@@ -42,24 +42,19 @@
             margin-bottom: 16px;
           }
 
-          .content {
-            margin-left: 20px;
-            margin-right: 20px;
-
-            .name {
-              font-weight: bold;
-              .time {
-                color: #777;
-                font-weight: lighter;
-                font-size: 0.8em;
-              }
+          .name {
+            font-weight: bold;
+            .time {
+              color: #777;
+              font-weight: lighter;
+              font-size: 0.8em;
             }
-
-            .body {
-              // text-decoration: underline;
-            }
-
           }
+
+          .body {
+            // text-decoration: underline;
+          }
+
         }
       }
     }

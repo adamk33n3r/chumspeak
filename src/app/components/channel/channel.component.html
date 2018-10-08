@@ -5,25 +5,17 @@
   </div>
 
   <div #messageList class='messages'>
-    <div class='wrapper'>
-      <div class='message' *ngFor='let message of messages | async'>
-        <div class='content'>
+    <mat-list class='wrapper'>
+      <mat-list-item class='message' *ngFor='let message of messages | async'>
+        <img matListAvatar src='https://www.gravatar.com/avatar/8ff80d09c3fa40407cba8a9efc0dd6d2?d=monsterid' />
+        <!-- <div class='content' matLine>
           <div class='name'>{{ message.said_by.displayName }} <span class='time'>{{ message.timestamp | date: 'medium' }}</span></div>
           <div class='body'>{{ message.body }}</div>
-        </div>
-      </div>
-      <!--
-      <div class='message'>
-        <div class='content'>
-          <div class='name'>Adam <span class='time'>12:32 PM</span></div>
-          <div class='body'>
-            Im at the bottom, mate. This is going to be a really long message because I need to test wrapping and margins along the edges.
-            What's going on in your life? Are you doing well? How are the kids?
-          </div>
-        </div>
-      </div>
-      -->
-    </div>
+        </div> -->
+        <div matLine class='name'>{{ message.said_by.displayName }} <span class='time'>{{ message.timestamp | date: 'medium' }}</span></div>
+        <div matLine class='body'>{{ message.body }}</div>
+      </mat-list-item>
+    </mat-list>
   </div>
 
   <div class='input'>
