@@ -57,6 +57,7 @@ export class LoginComponent implements OnInit {
           this.$db.collection('users').doc(uid).set({
             displayName: displayName,
             username: displayName,
+            email: cred.user.email,
           }),
         ])
         .then(() => {

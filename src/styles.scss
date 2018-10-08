@@ -2,7 +2,8 @@
 @import '~bootstrap/scss/variables';
 @import '~bootstrap/scss/mixins';
 @import '~bootstrap/scss/reboot';
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+// @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 // @import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
 
 html, body {
@@ -11,6 +12,14 @@ html, body {
 
 mat-form-field {
   width: 100%;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.flex-grow {
+  flex-grow: 1;
 }
 
 .float-right {

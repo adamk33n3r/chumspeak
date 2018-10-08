@@ -1,5 +1,5 @@
-<div class='app-container'>
-  <div class='sidebar'>
+<mat-sidenav-container class='app-container'>
+  <mat-sidenav mode='side' opened class='sidebar' #sidebar>
     <mat-form-field>
       <input type='text' matInput placeholder='Address' [(ngModel)]='address' />
     </mat-form-field>
@@ -55,7 +55,15 @@
       <button mat-raised-button color='warn' routerLink='/logout'>Logout</button>
       {{ user?.email }}
     </div>
-  </div>
+  </mat-sidenav>
 
-  <chum-channel class='main' [id]='selectedChannel'></chum-channel>
-</div>
+  <mat-sidenav-content class='main'>
+    <!-- <div class='toggle' (click)='sidebar.toggle()'>
+      <mat-icon *ngIf='sidebar.opened; else closed'>keyboard_arrow_left</mat-icon>
+      <ng-template #closed>
+        <mat-icon>keyboard_arrow_right</mat-icon>
+      </ng-template>
+    </div> -->
+    <chum-channel class='d-flex flex-grow' [id]='selectedChannel'></chum-channel>
+  </mat-sidenav-content>
+</mat-sidenav-container>
