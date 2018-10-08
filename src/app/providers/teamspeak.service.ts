@@ -54,8 +54,8 @@ export class TeamSpeakService {
   }
 
   public destroy() {
-    this.ts3client.destroyServerConnectionHandler(this.schID);
-    this.ts3client.destroyClientLib();
+    // this.ts3client.destroyServerConnectionHandler(this.schID);
+    // this.ts3client.destroyClientLib();
   }
 
   private setupListeners() {
