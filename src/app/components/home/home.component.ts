@@ -69,7 +69,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.channels = db.collection<IChannel>('channels').valueChanges();
     this.channels.subscribe((channels) => {
       console.log('channels:', channels);
-      this.selectedChannel = channels[0].id;
+      this.selectedChannel = channels[1].id;
     });
 
     this.$auth.auth.onAuthStateChanged((user) => {
@@ -119,9 +119,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       return;
     }
 
-    this.vadTestID = setInterval(() => {
+    this.vadTestID = window.setInterval(() => {
       this.currentDecibels = this.getCurrentDecibels();
-    });
+    }, 100);
   }
 
   public stopVADTest(): void {
@@ -130,7 +130,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public newChannel() {
-    const dialogRef = this.dialog.open(NewChannelComponent);
+    const dialogRef = this.dialog.open(NewChannelComponent, {
+      width: '500px',
+    });
     dialogRef.afterClosed().subscribe((data) => {
       console.log('closed:', data);
     });

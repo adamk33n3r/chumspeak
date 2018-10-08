@@ -5,21 +5,17 @@
 
 
   .sidebar {
-    color: rgba(220, 220, 220, 1);
-    background: #333;
+    // color: rgba(220, 220, 220, 1);
+    // background: #333;
     width: 300px;
     border-right: 3px solid red;
     flex: 0 0 300px;
-
-    mat-form-field {
-      width: 100%;
-    }
 
     .new-channel {
       // font-size: 1.5em;
 
       &:hover {
-        color: white;
+        color: black;
       }
     }
 
@@ -30,6 +26,8 @@
         &:hover {
           color: white;
           background: rgba(255, 255, 255, 0.5);
+          color: black;
+          background: rgba(0, 0, 0, 0.5);
         }
       }
     }

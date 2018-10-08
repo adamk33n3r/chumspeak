@@ -27,15 +27,17 @@
       <button type='button' mat-raised-button color='primary' (click)='stopVADTest()'>Stop Test</button>
       <span>{{ currentDecibels > VAD }}</span>
       <!-- <input type='range' min='-50' max='50' step='1' [(ngModel)]='currentDecibels' /> -->
-      <mat-slider [min]='-50' [max]='50' [step]='1' [(ngModel)]='currentDecibels'></mat-slider>
+      <mat-slider [min]='-50' [max]='50' [step]='1' [(ngModel)]='currentDecibels' disabled></mat-slider>
     </div>
     <div class='clear'>
-      Channels <button mat-icon-button (click)='newChannel()'><mat-icon class='pointer new-channel' [inline]='true'>add_circle</mat-icon></button>
-      <ul class='channels'>
-        <li class='channel' *ngFor='let channel of channels | async' (click)='switchToChannel(channel)'>
+      <mat-nav-list class='channels'>
+        <h2 mat-subheader>
+          Channels <button mat-icon-button (click)='newChannel()' class='new-channel'><mat-icon [inline]='false'>add_circle</mat-icon></button>
+        </h2>
+        <mat-list-item class='channel' *ngFor='let channel of channels | async' (click)='switchToChannel(channel)'>
           #{{ channel.name }}
-        </li>
-      </ul>
+        </mat-list-item>
+      </mat-nav-list>
       Voice
       <ul>
         <li>@General</li>

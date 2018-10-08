@@ -3,9 +3,12 @@
   <mat-form-field>
     <input type='text' matInput placeholder='Name' />
   </mat-form-field>
+  <mat-form-field>
+    <input type='text' matInput placeholder='Description' />
+  </mat-form-field>
 </mat-dialog-content>
-<mat-dialog-actions>
+<mat-dialog-actions style='justify-content: space-around'>
   <button mat-button mat-dialog-close>Cancel</button>
   <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-  <button mat-button [mat-dialog-close]='true'>Create</button>
+  <button mat-button color='primary' [mat-dialog-close]='true'>Create</button>
 </mat-dialog-actions>
