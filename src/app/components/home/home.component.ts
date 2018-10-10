@@ -1,14 +1,15 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit, TemplateRef } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { MatDialog } from '@angular/material';
 import { auth } from 'firebase/app';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import * as TS from 'node-ts3sdk-client';
 
 import { TeamSpeakService } from '../../providers/teamspeak.service';
-import { map } from 'rxjs/operators';
-import { MatDialog } from '@angular/material';
 import { NewChannelComponent } from '../../dialogs/new-channel/new-channel.component';
+import { ThemeService } from '../../providers/theme.service';
 
 export interface IChannel {
   id: string;
@@ -56,7 +57,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     private tss: TeamSpeakService,
     private db: AngularFirestore,
     private $auth: AngularFireAuth,
-    private dialog: MatDialog,
+    private $dialog: MatDialog,
+    private $theme: ThemeService,
   ) {
     this.ts = tss.ts3client;
 
@@ -130,7 +132,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public newChannel() {
-    const dialogRef = this.dialog.open(NewChannelComponent, {
+    const dialogRef = this.$dialog.open(NewChannelComponent, {
       width: '500px',
     });
     dialogRef.afterClosed().subscribe((data) => {
@@ -141,6 +143,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   public switchToChannel(channel: IChannel) {
     console.log(channel);
     this.selectedChannel = channel.id;
+  }
+
+  public toggleTheme() {
+    this.$theme.toggleTheme();
   }
 
   private getCurrentDecibels(): number {

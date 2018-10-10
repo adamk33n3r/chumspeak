@@ -17,6 +17,7 @@ export class TeamSpeakService {
 
     const logPath = undefined;
     const soundBackendPath = this.ts3client.getResourcePath();
+    console.log(soundBackendPath);
 
     this.ts3client.initClientLib(this.ts3client.LogTypes.FILE | this.ts3client.LogTypes.CONSOLE, logPath, soundBackendPath);
 

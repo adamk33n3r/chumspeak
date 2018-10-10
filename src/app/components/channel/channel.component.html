@@ -2,6 +2,17 @@
   <div class='header'>
     <div class='name'>#{{ (channel | async)?.name }}</div>
     <div class='description'>{{ (channel | async)?.description }}</div>
+
+    <mat-menu #channelMenu='matMenu'>
+      <button mat-menu-item (click)='deleteChannel()'>
+        <mat-icon color='warn'>delete_outline</mat-icon>
+        <span class='text-warn'>Delete Channel</span>
+      </button>
+    </mat-menu>
+
+    <button class='channel-menu' mat-icon-button type='button' [matMenuTriggerFor]='channelMenu'>
+      <mat-icon>more_vert</mat-icon>
+    </button>
   </div>
 
   <div #messageList class='messages'>

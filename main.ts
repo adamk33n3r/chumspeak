@@ -2,22 +2,33 @@ import { app, BrowserWindow, screen, Menu, MenuItemConstructorOptions } from 'el
 import * as path from 'path';
 import * as url from 'url';
 
+import { Store } from './src/store';
+
 let win: BrowserWindow | null;
 const args = process.argv.slice(1);
 const serve = args.some(val => val === '--serve');
 
 function createWindow() {
+  const size = screen.getPrimaryDisplay().workAreaSize;
+  const store = new Store({
+    configName: 'user-preferences',
+    defaults: {
+      windowBounds: { x: size.width / 2, y: size.height / 2, width: 800, height: 600 },
+    },
+  });
 
-  const electronScreen = screen;
-  const size = electronScreen.getPrimaryDisplay().workAreaSize;
+
+  const { x, y, width, height } = store.get('windowBounds');
+
+  console.log('store values:', width, height);
 
   // Create the browser window.
   const iconPath = path.join(__dirname, 'yoc.png');
   win = new BrowserWindow({
-    x: 0,
-    y: 0,
-    width: size.width,
-    height: size.height,
+    x,
+    y,
+    width,
+    height,
     icon: iconPath,
   });
 
@@ -131,6 +142,18 @@ function createWindow() {
   Menu.setApplicationMenu(menu);
 
   win.webContents.openDevTools();
+
+  win.on('move', () => {
+    const bounds = win!.getBounds();
+
+    store.set('windowBounds', bounds);
+  });
+
+  win.on('resize', () => {
+    const bounds = win!.getBounds();
+
+    store.set('windowBounds', bounds);
+  });
 
   // Emitted when the window is closed.
   win.on('closed', () => {

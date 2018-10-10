@@ -9,6 +9,7 @@ import {
     MatListModule,
     MatCardModule,
     MatSidenavModule,
+    MatMenuModule,
 } from '@angular/material';
 
 const modules: any[] = [
@@ -21,6 +22,7 @@ const modules: any[] = [
     MatListModule,
     MatCardModule,
     MatSidenavModule,
+    MatMenuModule,
 ];
 
 @NgModule({

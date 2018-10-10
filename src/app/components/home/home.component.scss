@@ -1,3 +1,5 @@
+@import 'variables';
+
 .app-container {
   display: flex;
   flex-flow: row nowrap;
@@ -8,7 +10,7 @@
     // color: rgba(220, 220, 220, 1);
     // background: #333;
     width: 300px;
-    border-right: 3px solid red;
+    border-right: 3px solid $accent;
     flex: 0 0 300px;
 
     .new-channel {

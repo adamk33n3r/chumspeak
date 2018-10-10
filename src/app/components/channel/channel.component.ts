@@ -3,8 +3,11 @@ import { AngularFirestore, DocumentReference, AngularFirestoreDocument } from '@
 import { firestore } from 'firebase';
 import { Observable, combineLatest } from 'rxjs';
 import { map, flatMap } from 'rxjs/operators';
-import { IChannel } from '../home/home.component';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { MatDialog } from '@angular/material';
+
+import { IChannel } from '../home/home.component';
+import { DeleteChannelComponent } from '../../dialogs/delete-channel/delete-channel.component';
 
 interface IMessage {
   body: string;
@@ -38,33 +41,13 @@ export class ChannelComponent implements OnInit, OnChanges {
   public channel!: Observable<IChannel | undefined>;
   public messages!: Observable<IFetchedMessage[]>;
 
+  private channelCached: IChannel | undefined;
+
   public messageText: string = '';
 
-  constructor(private $db: AngularFirestore, private $auth: AngularFireAuth) { }
+  constructor(private $db: AngularFirestore, private $auth: AngularFireAuth, private $dialog: MatDialog) { }
 
-  public ngOnInit() {
-    if (!this.id) {
-      return;
-    }
-
-    // this.messages = this.$db.collection('channels')
-    //   .doc(this.id)
-    //   .collection<IMessage>('messages')
-    //   .valueChanges()
-    //   .pipe(
-    //     map((messages) => {
-    //       // Post a SO question about how to do this good
-    //       return messages.map((message) => {
-    //         // return this.$db.doc(message.said_by.path).valueChanges();
-    //         message.said_by.get().then((user) => {
-    //           (message as any).user = user.data();
-    //         });
-    //         return message;
-    //       });
-    //     })
-    //   )
-    // ;
-  }
+  public ngOnInit() { }
 
   public ngOnChanges(changes: SimpleChanges) {
     if (!changes.id || !changes.id.currentValue) {
@@ -79,6 +62,7 @@ export class ChannelComponent implements OnInit, OnChanges {
     this.channel = this.channelRef.valueChanges();
     this.channel.subscribe((channel) => {
       console.log('CHANNEL:', channel);
+      this.channelCached = channel;
     });
 
     this.messages = this.channelRef
@@ -120,6 +104,20 @@ export class ChannelComponent implements OnInit, OnChanges {
       }) as any);
       this.messageText = '';
     }
+  }
+
+  public deleteChannel() {
+    this.channel.subscribe((channel) => {
+      console.log('deleting:', channel);
+    });
+    console.log(this.channelCached);
+    const dialogRef = this.$dialog.open(DeleteChannelComponent, {
+      // width: '500px',
+      data: { channel: this.channelCached }
+    });
+    dialogRef.afterClosed().subscribe((data) => {
+      console.log('closed:', data);
+    });
   }
 
 }

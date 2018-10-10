@@ -34,6 +34,7 @@ import { ChannelComponent } from './components/channel/channel.component';
 import { MaterialModule } from './material.module';
 import { DialogsModule } from './dialogs/dialogs.module';
 import { GravitarPipe } from './pipes/gravitar.pipe';
+import { OverlayContainer } from '@angular/cdk/overlay';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {

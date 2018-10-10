@@ -1,3 +1,5 @@
+@import 'variables';
+
 .channel-wrapper {
     display: flex;
     flex-flow: column nowrap;
@@ -14,6 +16,11 @@
       .name {
         font-weight: bold;
         font-size: 20px;
+      }
+
+      .channel-menu {
+        position: absolute;
+        right: 0;
       }
     }
 

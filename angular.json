@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-electron": {
+    "chumspeak": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -25,8 +25,14 @@
               "src/favicon.512x512.png"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/material.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src"
+              ]
+            },
             "scripts": []
           },
           "configurations": {
@@ -69,21 +75,21 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular-electron:build"
+            "browserTarget": "chumspeak:build"
           },
           "configurations": {
             "dev": {
-              "browserTarget": "angular-electron:build:dev"
+              "browserTarget": "chumspeak:build:dev"
             },
             "production": {
-              "browserTarget": "angular-electron:build:production"
+              "browserTarget": "chumspeak:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-electron:build"
+            "browserTarget": "chumspeak:build"
           }
         },
         "test": {
@@ -121,7 +127,7 @@
         }
       }
     },
-    "angular-electron-e2e": {
+    "chumspeak-e2e": {
       "root": "e2e",
       "projectType": "application",
       "architect": {
@@ -129,7 +135,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "angular-electron:serve"
+            "devServerTarget": "chumspeak:serve"
           }
         },
         "lint": {
@@ -146,14 +152,14 @@
       }
     }
   },
-  "defaultProject": "angular-electron",
+  "defaultProject": "chumspeak",
   "schematics": {
     "@schematics/angular:component": {
-      "prefix": "app",
+      "prefix": "chumspeak",
       "styleext": "scss"
     },
     "@schematics/angular:directive": {
-      "prefix": "app"
+      "prefix": "chumspeak"
     }
   }
 }
