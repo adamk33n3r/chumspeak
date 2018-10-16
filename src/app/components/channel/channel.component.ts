@@ -62,6 +62,9 @@ export class ChannelComponent implements OnInit, OnChanges {
     this.channel = this.channelRef.valueChanges();
     this.channel.subscribe((channel) => {
       console.log('CHANNEL:', channel);
+      if (channel) {
+        channel.id = this.id;
+      }
       this.channelCached = channel;
     });
 

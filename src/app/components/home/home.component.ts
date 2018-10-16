@@ -95,16 +95,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public connect() {
     this.tss.connect(this.address, this.password, this.nickname);
-
-    // this.db.collection<IChannel>('channels').add({
-    //   name: 'test',
-    //   description: 'this is descript',
-    //   messages: [],
-    // });
-    // this.authService.auth.signInWithEmailAndPassword('adam.g.keenan@gmail.com', 'password')
-    // .then((cred) => {
-    //   console.log(cred);
-    // });
   }
 
   public disconnect() {
@@ -132,11 +122,14 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public newChannel() {
-    const dialogRef = this.$dialog.open(NewChannelComponent, {
+    const dialogRef = this.$dialog.open<NewChannelComponent, any, IChannel>(NewChannelComponent, {
       width: '500px',
     });
-    dialogRef.afterClosed().subscribe((data) => {
-      console.log('closed:', data);
+    dialogRef.afterClosed().subscribe((channel) => {
+      console.log('closed:', channel);
+      if (channel) {
+        this.switchToChannel(channel);
+      }
     });
   }
 

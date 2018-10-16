@@ -1,14 +1,14 @@
 <h2 mat-dialog-title>New Channel</h2>
 <mat-dialog-content>
   <mat-form-field>
-    <input type='text' matInput placeholder='Name' />
+    <input type='text' matInput placeholder='Name' [(ngModel)]='name' (ngModelChange)='name = $event.toLowerCase()' />
   </mat-form-field>
   <mat-form-field>
-    <input type='text' matInput placeholder='Description' />
+    <input type='text' matInput placeholder='Description' [(ngModel)]='description' />
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions style='justify-content: space-around'>
   <button mat-button mat-dialog-close>Cancel</button>
   <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-  <button mat-button color='primary' [mat-dialog-close]='true'>Create</button>
+  <button mat-button color='primary' (click)='create()' [disabled]='saving'>Create</button>
 </mat-dialog-actions>

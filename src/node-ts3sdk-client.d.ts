@@ -177,7 +177,7 @@ declare module 'node-ts3sdk-client' {
 
     export function destroyServerConnectionHandler(schID: number): any;
 
-    export function flushChannelCreation(): any;
+    export function flushChannelCreation(schID: number, parentID: number): any;
 
     export function flushChannelUpdates(): any;
 
@@ -295,9 +295,9 @@ declare module 'node-ts3sdk-client' {
 
     export function getServerConnectionVariableAsUInt64(): any;
 
-    export function getServerVariableAsInt(): any;
+    export function getServerVariableAsInt(schID: number, FLAG: number): number;
 
-    export function getServerVariableAsString(schID: number, variable: number): string;
+    export function getServerVariableAsString(schID: number, FLAG: number): string;
 
     export function getServerVariableAsUInt64(): any;
 
@@ -331,11 +331,13 @@ declare module 'node-ts3sdk-client' {
         'onConnectStatusChangeEvent' |
         'onTalkStatusChangeEvent' |
         'onClientMoveEvent' |
-        'onServerErrorEvent'
+        'onServerErrorEvent' |
+        'onNewChannelCreatedEvent'
     ;
     export function on(message: EventNames, cb: any): void;
     export function on(message: 'onConnectStatusChangeEvent', cb: (schID: number, status: number, errno: number) => void): void;
     export function on(message: 'onServerErrorEvent', cb: (schID: number, err: any, retCode: string, extraMsg: string) => void): void;
+    export function on(message: 'onNewChannelCreatedEvent', cb: (schID: number, channelID: number, channelParentID: number, invokerID: any, invokerName: string, invokerUniqueIdentifier: string) => void): void;
 
     export function openCaptureDevice(schID: number): any;
 
@@ -401,11 +403,11 @@ declare module 'node-ts3sdk-client' {
 
     export function sendFile(): any;
 
-    export function setChannelVariableAsInt(): any;
+    export function setChannelVariableAsInt(schID: number, channelID: number, FLAG: number, value: number): any;
 
-    export function setChannelVariableAsString(): any;
+    export function setChannelVariableAsString(schID: number, channelID: number, FLAG: number, value: string): any;
 
-    export function setChannelVariableAsUInt64(): any;
+    export function setChannelVariableAsUInt64(schID: number, channelID: number, FLAG: number, value: number): any;
 
     export function setClientSelfVariableAsInt(schID: number, property: number, value: number): any;
 
