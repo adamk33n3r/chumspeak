@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
-import { MatDialogModule, MatButtonModule, MatInputModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
 
 import { NewChannelComponent } from './new-channel/new-channel.component';
 import { DeleteChannelComponent } from './delete-channel/delete-channel.component';

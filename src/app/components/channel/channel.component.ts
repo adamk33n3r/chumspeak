@@ -4,7 +4,7 @@ import { firestore } from 'firebase';
 import { Observable, combineLatest } from 'rxjs';
 import { map, flatMap } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 import { IChannel } from '../home/home.component';
 import { DeleteChannelComponent } from '../../dialogs/delete-channel/delete-channel.component';
