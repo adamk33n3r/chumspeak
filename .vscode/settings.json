@@ -30,5 +30,10 @@
         "typescript",
         "typescriptreact",
         "yml"
-    ]
+    ],
+    "files.exclude": {
+        "**/*.map": true,
+        "dist": true,
+        "node_modules": true
+    }
 }

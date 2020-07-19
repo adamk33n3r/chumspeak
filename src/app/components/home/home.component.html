@@ -22,12 +22,16 @@
     <div class='clear'>
       <label>Threshold</label>
       <!-- <input type='range' min='-50' max='50' step='1' (change)='VAD = $event.target.value' /> -->
-      <mat-slider [min]='-50' [max]='50' [step]='1' [tickInterval]='5' [thumbLabel]='true' value='0' (change)='VAD = $event.value'></mat-slider>
+      <mat-slider [min]='-50' [max]='50' [step]='1' [tickInterval]='5' [thumbLabel]='true' [value]='VAD' (change)='VAD = $event.value'></mat-slider>
       <button type='button' mat-raised-button color='primary' (click)='startVADTest()'>Start Test</button>
       <button type='button' mat-raised-button color='primary' (click)='stopVADTest()'>Stop Test</button>
       <span>{{ currentDecibels > VAD }}</span>
       <!-- <input type='range' min='-50' max='50' step='1' [(ngModel)]='currentDecibels' /> -->
       <mat-slider [min]='-50' [max]='50' [step]='1' [(ngModel)]='currentDecibels' disabled></mat-slider>
+      <div>
+        <label>AGC:</label>
+        <mat-checkbox [checked]='AGC' (change)='AGC = $event.checked'></mat-checkbox>
+      </div>
     </div>
     <div class='clear'>
       <mat-nav-list class='channels'>

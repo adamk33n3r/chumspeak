@@ -41,6 +41,7 @@ export class TeamSpeakService {
   }
 
   public connect(address: string, password: string, nickname: string) {
+    console.log('IDENTITY:', this.identity);
     try {
       this.ts3client.startConnection(
         this.schID,
@@ -101,7 +102,7 @@ export class TeamSpeakService {
     });
   }
 
-  public createChannel(name: string): Observable<number> {
+  public createChannel(name: string, description: string): Observable<number> {
     /* int createChannel(uint64 scHandlerID, uint64 parentChannelID, const char* name, const char* topic,
                         const char* description, const char* password, int codec, int codecQuality,
                         int maxClients, int familyMaxClients, int order, int perm,
@@ -129,6 +130,7 @@ export class TeamSpeakService {
       });
 
       this.ts3client.setChannelVariableAsString(this.schID, 0, this.ts3client.ChannelProperties.NAME, name);
+      this.ts3client.setChannelVariableAsString(this.schID, 0, this.ts3client.ChannelProperties.DESCRIPTION, description);
       this.ts3client.setChannelVariableAsInt(this.schID, 0, this.ts3client.ChannelProperties.FLAG_PERMANENT, 1);
 
       this.ts3client.flushChannelCreation(this.schID, 0);

@@ -35,10 +35,16 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public get VAD(): number {
-    return this.ts.getPreProcessorConfigValue(this.tss.schID, 'voiceactivation_level');
+    return +this.ts.getPreProcessorConfigValue(this.tss.schID, 'voiceactivation_level');
   }
   public set VAD(val: number) {
     this.ts.setPreProcessorConfigValue(this.tss.schID, 'voiceactivation_level', val.toString());
+  }
+  public get AGC(): boolean {
+    return this.ts.getPreProcessorConfigValue(this.tss.schID, 'agc') === 'true';
+  }
+  public set AGC(val: boolean) {
+    this.ts.setPreProcessorConfigValue(this.tss.schID, 'agc', val.toString());
   }
 
   public currentDecibels: number = 0;
@@ -61,6 +67,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     private $theme: ThemeService,
   ) {
     this.ts = tss.ts3client;
+    this.ts.setPreProcessorConfigValue(this.tss.schID, 'agc', 'false');
 
     this.channels = db.collection<IChannel>('channels').snapshotChanges().pipe(map((changes) => {
       return changes.map((change) => {
