@@ -17,6 +17,7 @@ export class TeamSpeakService {
 
   constructor() {
     this.ts3client = window.require('node-ts3sdk-client');
+    console.log(this.ts3client);
 
     const logPath = undefined;
     const soundBackendPath = this.ts3client.getResourcePath();

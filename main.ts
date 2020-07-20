@@ -30,6 +30,9 @@ function createWindow() {
     width,
     height,
     icon: iconPath,
+    webPreferences: {
+      nodeIntegration: true,
+    },
   });
 
   if (serve) {
@@ -61,21 +64,21 @@ function createWindow() {
         {role: 'cut'},
         {role: 'copy'},
         {role: 'paste'},
-        {role: 'pasteandmatchstyle'},
+        {role: 'pasteAndMatchStyle'},
         {role: 'delete'},
-        {role: 'selectall'}
+        {role: 'selectAll'}
       ]
     },
     {
       label: 'View',
       submenu: [
         {role: 'reload'},
-        {role: 'forcereload'},
-        {role: 'toggledevtools'},
+        {role: 'forceReload'},
+        {role: 'toggleDevTools'},
         {type: 'separator'},
-        {role: 'resetzoom'},
-        {role: 'zoomin'},
-        {role: 'zoomout'},
+        {role: 'resetZoom'},
+        {role: 'zoomIn'},
+        {role: 'zoomOut'},
         {type: 'separator'},
         {role: 'togglefullscreen'}
       ]
@@ -107,7 +110,7 @@ function createWindow() {
         {role: 'services', submenu: []},
         {type: 'separator'},
         {role: 'hide'},
-        {role: 'hideothers'},
+        {role: 'hideOthers'},
         {role: 'unhide'},
         {type: 'separator'},
         {role: 'quit'}
@@ -122,8 +125,8 @@ function createWindow() {
       {
         label: 'Speech',
         submenu: [
-          {role: 'startspeaking'},
-          {role: 'stopspeaking'}
+          {role: 'startSpeaking'},
+          {role: 'stopSpeaking'}
         ]
       }
     );
