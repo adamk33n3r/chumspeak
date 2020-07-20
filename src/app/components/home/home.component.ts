@@ -11,11 +11,13 @@ import { TeamSpeakService } from '../../providers/teamspeak.service';
 import { NewChannelComponent } from '../../dialogs/new-channel/new-channel.component';
 import { ThemeService } from '../../providers/theme.service';
 
-export interface IChannel {
-  id: string;
+export interface IChannelDB {
   name: string;
   description: string;
   messages: any[];
+}
+export interface IChannel extends IChannelDB {
+  id: string;
 }
 
 @Component({
@@ -69,7 +71,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.ts = tss.ts3client;
     this.ts.setPreProcessorConfigValue(this.tss.schID, 'agc', 'false');
 
-    this.channels = db.collection<IChannel>('channels').snapshotChanges().pipe(map((changes) => {
+    this.channels = db.collection<IChannelDB>('channels').snapshotChanges().pipe(map((changes) => {
       return changes.map((change) => {
         const doc = change.payload.doc;
         return { id: doc.id, ...doc.data() };

@@ -2,7 +2,7 @@ import { app, BrowserWindow, screen, Menu, MenuItemConstructorOptions } from 'el
 import * as path from 'path';
 import * as url from 'url';
 
-import { Store } from './src/store';
+import { Store } from './store';
 
 let win: BrowserWindow | null;
 const args = process.argv.slice(1);
