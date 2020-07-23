@@ -1,14 +1,15 @@
-import { app, BrowserWindow, screen, Menu, MenuItemConstructorOptions } from 'electron';
+import { app, BrowserWindow, screen } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
 import { Store } from './store';
 
-let win: BrowserWindow | null;
-const args = process.argv.slice(1);
-const serve = args.some(val => val === '--serve');
+let win: BrowserWindow = null;
+const args = process.argv.slice(1),
+  serve = args.some(val => val === '--serve');
 
-function createWindow() {
+function createWindow(): BrowserWindow {
+
   const size = screen.getPrimaryDisplay().workAreaSize;
   const store = new Store({
     configName: 'user-preferences',
@@ -25,21 +26,26 @@ function createWindow() {
   // Create the browser window.
   const iconPath = path.join(__dirname, 'yoc.png');
   win = new BrowserWindow({
-    x,
-    y,
+    x: x,
+    y: y,
     width,
     height,
     icon: iconPath,
     webPreferences: {
       nodeIntegration: true,
+      allowRunningInsecureContent: (serve) ? true : false,
     },
   });
 
   if (serve) {
+
+    win.webContents.openDevTools();
+
     require('electron-reload')(__dirname, {
       electron: require(`${__dirname}/node_modules/electron`)
     });
     win.loadURL('http://localhost:4200');
+
   } else {
     win.loadURL(url.format({
       pathname: path.join(__dirname, 'dist/index.html'),
@@ -47,104 +53,6 @@ function createWindow() {
       slashes: true
     }));
   }
-
-  const template: MenuItemConstructorOptions[] = [
-    {
-      label: 'File',
-      submenu: [
-        { role: 'quit' }
-      ],
-    },
-    {
-      label: 'Edit',
-      submenu: [
-        {role: 'undo'},
-        {role: 'redo'},
-        {type: 'separator'},
-        {role: 'cut'},
-        {role: 'copy'},
-        {role: 'paste'},
-        {role: 'pasteAndMatchStyle'},
-        {role: 'delete'},
-        {role: 'selectAll'}
-      ]
-    },
-    {
-      label: 'View',
-      submenu: [
-        {role: 'reload'},
-        {role: 'forceReload'},
-        {role: 'toggleDevTools'},
-        {type: 'separator'},
-        {role: 'resetZoom'},
-        {role: 'zoomIn'},
-        {role: 'zoomOut'},
-        {type: 'separator'},
-        {role: 'togglefullscreen'}
-      ]
-    },
-    {
-      role: 'window',
-      submenu: [
-        {role: 'minimize'},
-        {role: 'close'}
-      ]
-    },
-    {
-      role: 'help',
-      submenu: [
-        {
-          label: 'Learn More',
-          click () { require('electron').shell.openExternal('https://electronjs.org'); }
-        }
-      ]
-    }
-  ];
-
-  if (process.platform === 'darwin') {
-    template.unshift({
-      label: app.getName(),
-      submenu: [
-        {role: 'about'},
-        {type: 'separator'},
-        {role: 'services', submenu: []},
-        {type: 'separator'},
-        {role: 'hide'},
-        {role: 'hideOthers'},
-        {role: 'unhide'},
-        {type: 'separator'},
-        {role: 'quit'}
-      ]
-    });
-
-    template[0].label!.trimRight();
-
-    // Edit menu
-    (template[1].submenu! as MenuItemConstructorOptions[]).push(
-      {type: 'separator'},
-      {
-        label: 'Speech',
-        submenu: [
-          {role: 'startSpeaking'},
-          {role: 'stopSpeaking'}
-        ]
-      }
-    );
-
-    // Window menu
-    template[3].submenu = [
-      {role: 'close'},
-      {role: 'minimize'},
-      {role: 'zoom'},
-      {type: 'separator'},
-      {role: 'front'}
-    ];
-  }
-
-  const menu = Menu.buildFromTemplate(template);
-  Menu.setApplicationMenu(menu);
-
-  win.webContents.openDevTools();
 
   win.on('move', () => {
     const bounds = win!.getBounds();
@@ -166,14 +74,18 @@ function createWindow() {
     win = null;
   });
 
+  return win;
 }
 
 try {
 
+  app.allowRendererProcessReuse = true;
+
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
   // Some APIs can only be used after this event occurs.
-  app.on('ready', createWindow);
+  // Added 400 ms to fix the black background issue while using transparent window. More detais at https://github.com/electron/electron/issues/15947
+  app.on('ready', () => setTimeout(createWindow, 400));
 
   // Quit when all windows are closed.
   app.on('window-all-closed', () => {

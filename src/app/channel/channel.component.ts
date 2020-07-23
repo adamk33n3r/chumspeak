@@ -7,7 +7,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { MatDialog } from '@angular/material/dialog';
 
 import { IChannel } from '../home/home.component';
-import { DeleteChannelComponent } from '../../dialogs/delete-channel/delete-channel.component';
+import { DeleteChannelComponent } from '../dialogs/delete-channel/delete-channel.component';
 
 interface IMessage {
   body: string;

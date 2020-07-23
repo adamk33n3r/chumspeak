@@ -6,10 +6,11 @@ import { auth } from 'firebase/app';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as TS from 'node-ts3sdk-client';
+import * as sdk from 'matrix-js-sdk';
 
-import { TeamSpeakService } from '../../providers/teamspeak.service';
-import { NewChannelComponent } from '../../dialogs/new-channel/new-channel.component';
-import { ThemeService } from '../../providers/theme.service';
+import { TeamSpeakService } from '../core/services/teamspeak.service';
+import { NewChannelComponent } from '../dialogs/new-channel/new-channel.component';
+import { ThemeService } from '../core/services/theme.service';
 
 export interface IChannelDB {
   name: string;
@@ -70,6 +71,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {
     this.ts = tss.ts3client;
     this.ts.setPreProcessorConfigValue(this.tss.schID, 'agc', 'false');
+
+    const client = sdk.createClient('https://matrix.org');
+    client.publicRooms((err: any, data: any) => {
+      console.log(data);
+    });
 
     this.channels = db.collection<IChannelDB>('channels').snapshotChanges().pipe(map((changes) => {
       return changes.map((change) => {

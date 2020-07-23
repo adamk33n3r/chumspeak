@@ -1,4 +1,3 @@
-//import 'zone.js/dist/zone-mix';
 import 'reflect-metadata';
 import '../polyfills';
 
@@ -7,14 +6,12 @@ import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireModule } from '@angular/fire';
 
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatDialogModule } from '@angular/material/dialog';
+import { CoreModule } from './core/core.module';
+import { SharedModule } from './shared/shared.module';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -22,59 +19,52 @@ import { AppRoutingModule } from './app-routing.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { ElectronService } from './providers/electron.service';
-
-import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
+import { HomeModule } from './home/home.module';
+import { DetailModule } from './detail/detail.module';
 
 import { AppConfig } from '../environments/environment';
+import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
-import { ChannelComponent } from './components/channel/channel.component';
 import { MaterialModule } from './material.module';
 import { DialogsModule } from './dialogs/dialogs.module';
-import { GravitarPipe } from './pipes/gravitar.pipe';
-import { OverlayContainer } from '@angular/cdk/overlay';
 
 // AoT requires an exported function for factories
-export function HttpLoaderFactory(http: HttpClient) {
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     LoginComponent,
     LogoutComponent,
-    ChannelComponent,
-
-    GravitarPipe,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    // NoopAnimationsModule,
     FormsModule,
     HttpClientModule,
+    CoreModule,
+    SharedModule,
+    HomeModule,
+    DetailModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(AppConfig.firebase),
-    // AngularFireDatabaseModule,
     AngularFirestoreModule,
     AngularFireAuthModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (HttpLoaderFactory),
+        useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
     }),
 
     MaterialModule,
     DialogsModule,
-
   ],
-  providers: [ElectronService],
+  providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

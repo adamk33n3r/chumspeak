@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 
-import { IChannel } from '../../components/home/home.component';
+import { IChannel } from '../../home/home.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AngularFirestore } from '@angular/fire/firestore';
 

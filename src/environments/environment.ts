@@ -12,3 +12,4 @@ export const AppConfig = {
     messagingSenderId: '330886380876'
   },
 };
+

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { TeamSpeakService } from '../../providers/teamspeak.service';
+import { TeamSpeakService } from '../../core/services/teamspeak.service';
 
 interface IChannel {
   name: string;
