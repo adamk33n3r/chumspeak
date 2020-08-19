@@ -2,13 +2,13 @@
 
 @include mat-core();
 
-$chumspeak-theme: mat-light-theme($chumspeak-primary, $chumspeak-accent, $chumspeak-warn);
-$chumspeak-dark-theme: mat-dark-theme($chumspeak-primary-dark, $chumspeak-accent, $chumspeak-warn);
+$chumchat-theme: mat-light-theme($chumchat-primary, $chumchat-accent, $chumchat-warn);
+$chumchat-dark-theme: mat-dark-theme($chumchat-primary-dark, $chumchat-accent, $chumchat-warn);
 
-.chumspeak-light-theme {
-  @include angular-material-theme($chumspeak-theme);
+.chumchat-light-theme {
+  @include angular-material-theme($chumchat-theme);
 }
 
-.chumspeak-dark-theme {
-  @include angular-material-theme($chumspeak-dark-theme);
+.chumchat-dark-theme {
+  @include angular-material-theme($chumchat-dark-theme);
 }

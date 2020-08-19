@@ -1,0 +1,32 @@
+<div fxLayout='column' style='height: 100%'>
+    <!-- <h2 mat-dialog-title>Settings</h2> -->
+    <mat-dialog-content style='height: 100%'>
+        <div fxLayout='row' style='height: 100%; overflow: hidden'>
+            <mat-selection-list [multiple]='false' [(ngModel)]='options' tabindex='-1' style='padding-top: 0'>
+                <mat-list-option value='audio'>
+                    <mat-icon mat-list-icon>headset_mic</mat-icon>
+                    <p mat-line>Audio</p>
+                </mat-list-option>
+                <mat-list-option value='notifications'>
+                    <mat-icon mat-list-icon>notifications_active</mat-icon>
+                    <p mat-line>Notifications</p>
+                </mat-list-option>
+            </mat-selection-list>
+            <div style='width: 100%; padding: 0 15px; overflow-y: auto' fxLayout='column'>
+                <div [hidden]='selectedTab != "audio"'>
+                    <chum-audio></chum-audio>
+                </div>
+                <div [hidden]='selectedTab != "notifications"'>
+                    <chum-notifications></chum-notifications>
+                </div>
+            </div>
+        </div>
+
+    </mat-dialog-content>
+    <div fxFlex></div>
+    <mat-dialog-actions fxLayoutAlign='space-around'>
+        <button mat-button mat-dialog-close>Cancel</button>
+        <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+        <button mat-button color='primary' (click)='save()'>Save</button>
+    </mat-dialog-actions>
+</div>

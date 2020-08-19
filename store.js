@@ -1,43 +1,126 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Store = void 0;
-var electron = require("electron");
-var path = require("path");
-var fs = require("fs");
-var Store = /** @class */ (function () {
-    function Store(opts) {
-        // Renderer process has to get `app` module via `remote`, whereas the main process can get it directly
-        // app.getPath('userData') will return a string of the user's app data directory path.
-        var userDataPath = (electron.app || electron.remote.app).getPath('userData');
-        // We'll use the `configName` property to set the file name and path.join to bring it all together as a string
-        this.path = path.join(userDataPath, opts.configName + '.json');
-        this.data = parseDataFile(this.path, opts.defaults);
-    }
-    // This will just return the property on the `data` object
-    Store.prototype.get = function (key) {
-        return this.data[key];
-    };
-    // ...and this will set it
-    Store.prototype.set = function (key, val) {
-        this.data[key] = val;
-        // Wait, I thought using the node.js' synchronous APIs was bad form?
-        // We're not writing a server so there's not nearly the same IO demand on the process
-        // Also if we used an async API and our app was quit before the asynchronous write had a chance to complete,
-        // we might lose that data. Note that in a real app, we would try/catch this.
-        fs.writeFileSync(this.path, JSON.stringify(this.data));
-    };
-    return Store;
-}());
-exports.Store = Store;
-function parseDataFile(filePath, defaults) {
-    // We'll try/catch it in case the file doesn't exist yet, which will be the case on the first application run.
-    // `fs.readFileSync` will return a JSON string which we then parse into a Javascript object
-    try {
-        return JSON.parse(fs.readFileSync(filePath, { encoding: 'utf8' }));
-    }
-    catch (error) {
-        // if there was some kind of error, return the passed in defaults instead.
-        return defaults;
-    }
-}
+exports.userPrefs = exports.appPrefs = void 0;
+var electron_1 = require("electron");
+var Store = require("electron-store");
+exports.appPrefs = function () {
+    var size = (electron_1.screen || electron_1.remote.screen).getPrimaryDisplay().workAreaSize;
+    return new Store({
+        name: 'app-store',
+        // defaults: {
+        //   windowBounds: { x: size.width / 2, y: size.height / 2, width: 1440, height: 800 },
+        // },
+        schema: {
+            windowBounds: {
+                type: 'object',
+                default: {},
+                properties: {
+                    x: {
+                        type: 'number',
+                        default: size.width / 2,
+                    },
+                    y: {
+                        type: 'number',
+                        default: size.height / 2,
+                    },
+                    width: {
+                        type: 'number',
+                        default: 1440,
+                    },
+                    height: {
+                        type: 'number',
+                        default: 800,
+                    },
+                },
+            },
+        },
+    });
+};
+exports.userPrefs = new Store({
+    name: 'user-preferences',
+    schema: {
+        audio: {
+            type: 'object',
+            additionalProperties: false,
+            default: {},
+            properties: {
+                captureDevice: {
+                    type: 'string',
+                    default: 'default',
+                },
+                playbackDevice: {
+                    type: 'string',
+                    default: 'default',
+                },
+                activationMode: {
+                    type: 'string',
+                    enum: ['ptt', 'vad'],
+                    default: 'vad',
+                },
+                pttKey: {
+                    type: 'array',
+                    items: {
+                        type: 'string',
+                    },
+                    default: ['F12'],
+                },
+                vadLevel: {
+                    type: 'integer',
+                    default: 0,
+                },
+                noiseSuppression: {
+                    type: 'boolean',
+                    default: true,
+                },
+                echoCancellation: {
+                    type: 'boolean',
+                    default: false,
+                },
+                automaticGainControl: {
+                    type: 'boolean',
+                    default: true,
+                },
+            },
+        },
+        notifications: {
+            type: 'object',
+            additionalProperties: false,
+            default: {},
+            properties: {
+                voiceChat: {
+                    type: 'object',
+                    default: {},
+                    properties: {
+                        connected: {
+                            type: 'boolean',
+                            default: true,
+                        },
+                        disconnected: {
+                            type: 'boolean',
+                            default: true,
+                        },
+                        userJoined: {
+                            type: 'boolean',
+                            default: true,
+                        },
+                        userLeft: {
+                            type: 'boolean',
+                            default: true,
+                        },
+                    },
+                },
+                messages: {
+                    type: 'object',
+                    default: {},
+                    properties: {
+                        mentions: {
+                            type: 'boolean',
+                            default: true,
+                        },
+                    },
+                },
+            },
+        },
+    },
+});
 //# sourceMappingURL=store.js.map

@@ -1,5 +1,9 @@
 {
-  "productName": "angular-electron",
+  "productName": "ChumChat",
+  "appId": "gg.yoc.chumchat",
+  "asar": false,
+  "npmRebuild": false,
+  "nodeGypRebuild": false,
   "directories": {
     "output": "release/"
   },

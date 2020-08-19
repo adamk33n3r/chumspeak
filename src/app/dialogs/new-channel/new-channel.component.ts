@@ -35,17 +35,17 @@ export class NewChannelComponent implements OnInit {
     this.ts.createChannel(this.name, this.description).subscribe((channelID) => {
       console.log('created teamspeak channel. ID:', channelID);
 
-      // this.$db.collection<IChannel>('channels').add({
-      //   name: this.name,
-      //   description: this.description,
-      //   teamspeak: channelID,
-      // }).then((docRef) => {
-      //   console.log('added channel, getting data');
-      //   docRef.get().then((val) => {
-      //     console.log('got data. closing dialog');
-      //     this.dialog.close({ id: docRef.id, ...val.data() });
-      //   });
-      // });
+      this.$db.collection<IChannel>('channels').add({
+        name: this.name,
+        description: this.description,
+        teamspeak: channelID,
+      }).then((docRef) => {
+        console.log('added channel, getting data');
+        docRef.get().then((val) => {
+          console.log('got data. closing dialog');
+          this.dialog.close({ id: docRef.id, ...val.data() });
+        });
+      });
       this.dialog.close();
     });
 

@@ -27,11 +27,18 @@
         <div matLine class='body'>{{ message.body }}</div>
       </mat-list-item>
     </mat-list>
+    <button mat-raised-button color='accent' (click)='loadMore()'>Load More</button>
   </div>
 
   <div class='input'>
     <mat-form-field appearance='outline'>
-      <textarea matInput placeholder='Enter text here' maxlength='1000' [(ngModel)]='messageText' (keydown)='onInputKeydown($event)'></textarea>
+      <textarea matInput autofocus placeholder='Enter text here' maxlength='1000' [(ngModel)]='messageText' (keydown)='onInputKeydown($event)'></textarea>
+      <button mat-icon-button matSuffix>
+        <mat-icon>insert_emoticon</mat-icon>
+      </button>
+      <button mat-icon-button matSuffix (click)='sendMessage()'>
+        <mat-icon>send</mat-icon>
+      </button>
     </mat-form-field>
   </div>
 

@@ -1,21 +1,12 @@
 {
-  "name": "angular-electron",
-  "version": "8.0.0",
-  "description": "Angular 10 with Electron (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/maximegris/angular-electron",
+  "name": "chumchat",
+  "version": "1.0.0",
+  "description": "Chat with the Chums!",
+  "homepage": "https://github.com/adamk33n3r/chumspeak",
   "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
+    "name": "Adam Keenan",
+    "email": "adam.g.keenan@gmail.com"
   },
-  "keywords": [
-    "angular",
-    "angular 10",
-    "electron",
-    "typescript",
-    "eslint",
-    "spectron",
-    "sass"
-  ],
   "main": "main.js",
   "private": true,
   "scripts": {
@@ -25,9 +16,9 @@
     "build": "npm run electron:serve-tsc && ng build --base-href ./",
     "build:dev": "npm run build -- -c dev",
     "build:prod": "npm run build -- -c production",
-    "ng:serve": "ng serve",
+    "ng:serve": "ng serve -c web",
     "ng:serve:web": "ng serve -c web -o",
-    "electron:serve-tsc": "tsc -p tsconfig-serve.json",
+    "electron:serve-tsc": "tsc -p tsconfig.serve.json",
     "electron:serve": "wait-on tcp:4200 && npm run electron:serve-tsc && npx electron . --serve",
     "electron:local": "npm run build:prod && npx electron .",
     "electron:build": "npm run build:prod && electron-builder build",
@@ -38,8 +29,11 @@
     "lint": "ng lint"
   },
   "dependencies": {
+    "@angular/flex-layout": "10.0.0-beta.32",
+    "electron-store": "6.0.0",
+    "electron-windows-notifications": "3.0.6",
     "matrix-js-sdk": "7.1.0",
-    "node-ts3sdk-client": "github:adamk33n3r/node-ts3sdk-client#context-aware"
+    "node-ts3sdk-client": "github:adamk33n3r/node-ts3sdk-client#dev"
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "9.2.0",
@@ -49,7 +43,7 @@
     "@angular-eslint/eslint-plugin-template": "0.0.1-alpha.32",
     "@angular-eslint/template-parser": "0.0.1-alpha.32",
     "@angular/animations": "^10.0.0 || ^11.0.0-0",
-    "@angular/cdk": "~10.1.0-next.0",
+    "@angular/cdk": "10.1.2",
     "@angular/cli": "10.0.2",
     "@angular/common": "10.0.3",
     "@angular/compiler": "10.0.3",

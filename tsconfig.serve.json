@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "skipLibCheck": true,
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
@@ -17,7 +18,9 @@
     ]
   },
   "files": [
-    "main.ts"
+    "main.ts",
+    "preload.ts",
+    "src/typings.d.ts"
   ],
   "exclude": [
     "node_modules",

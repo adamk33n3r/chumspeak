@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
         return;
       }
 
+      console.log(localStorage.identity);
       console.log('Already logged in, redirecting');
       this.$router.navigate(['home']);
     });

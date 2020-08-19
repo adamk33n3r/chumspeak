@@ -8,6 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from 'app/material.module';
 import { ChannelComponent } from 'app/channel/channel.component';
 import { GravitarPipe } from 'app/pipes/gravitar.pipe';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,6 @@ import { GravitarPipe } from 'app/pipes/gravitar.pipe';
 
     GravitarPipe,
   ],
-  imports: [CommonModule, SharedModule, HomeRoutingModule, MaterialModule]
+  imports: [CommonModule, SharedModule, HomeRoutingModule, MaterialModule, MatButtonModule]
 })
 export class HomeModule {}

@@ -1,0 +1,13 @@
+@mixin flex-wrap-spacing($px) {
+    margin-top: -$px;
+    & > * {
+        margin-top: $px;
+    }
+}
+.toggle-controls {
+    @include flex-wrap-spacing(10px);
+}
+
+.mat-progress-bar {
+    margin: 8px;
+}

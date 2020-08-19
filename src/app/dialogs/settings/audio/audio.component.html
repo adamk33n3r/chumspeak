@@ -1,0 +1,53 @@
+<h3>Voice</h3>
+<div fxLayout='row' fxLayoutGap='10px'>
+    <mat-form-field appearance='outline'>
+        <mat-label>Capture Device</mat-label>
+        <mat-select [(ngModel)]='prefs.captureDevice' (ngModelChange)='setCaptureDevice($event)'>
+            <mat-option *ngFor='let device of captureDevices'
+                [value]='device.isDefault ? "default" : device.id'
+                [style.fontWeight]='device.isDefault ? "bold" : "unset"'
+                [matTooltip]='device.name'
+            >
+                <span>{{ device.name }}</span>
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance='outline'>
+        <mat-label>Playback Device</mat-label>
+        <mat-select [(ngModel)]='prefs.playbackDevice' (ngModelChange)='setPlaybackDevice($event)'>
+            <mat-option *ngFor='let device of playbackDevices'
+                [value]='device.isDefault ? "default" : device.id'
+                [style.fontWeight]='device.isDefault ? "bold" : "unset"'
+                [matTooltip]='device.name'
+            >
+                <span>{{ device.name }}</span>
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+<mat-radio-group [(ngModel)]='prefs.activationMode' fxLayout='column'>
+    <mat-radio-button value='ptt' disabled>Push-To-Talk <small>(Not implemented)</small></mat-radio-button>
+    <mat-radio-button value='vad'>Voice Activity Detection</mat-radio-button>
+</mat-radio-group>
+<div fxLayout='row' fxLayoutGap='10px'>
+    <div fxFlex='70px'></div>
+    <mat-slider [min]='-50' [max]='50' [step]='1' [tickInterval]='10' [thumbLabel]='true' value='0' style='width: 100%'
+        [(ngModel)]='prefs.vadLevel'
+        [disabled]='prefs.activationMode != "vad"'
+    ></mat-slider>
+</div>
+<div fxLayout='row' fxLayoutGap='10px'>
+    <button fxFlex='70px' type='button' mat-raised-button color='primary' (click)='vadTestID ? stopVADTest() : startVADTest()'>
+        {{ vadTestID ? "Stop" : "Test" }}
+    </button>
+    <mat-progress-bar fxFlexAlign='center' [color]='currentDecibels >= prefs.vadLevel ? "accent" : "primary"' [value]='currentDecibels + 50'></mat-progress-bar>
+</div>
+<br/>
+<br/>
+<div class='toggle-controls' fxLayout='row wrap' fxLayoutAlign='space-between'>
+    <mat-slide-toggle [(ngModel)]='prefs.noiseSuppression'>Noise Suppression</mat-slide-toggle>
+    <mat-slide-toggle [(ngModel)]='prefs.echoCancellation'>Echo Cancellation</mat-slide-toggle>
+    <mat-slide-toggle [(ngModel)]='prefs.automaticGainControl'>Automatic Gain Control</mat-slide-toggle>
+</div>
+
+<ng-template #errorTemplate let-data>{{ data.msg }}</ng-template>

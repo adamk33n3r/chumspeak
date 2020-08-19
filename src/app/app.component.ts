@@ -16,11 +16,6 @@ export class AppComponent {
     private translate: TranslateService,
     private $theme: ThemeService,
   ) {
-    const client = sdk.createClient('https://matrix.org');
-    client.publicRooms((err: any, data: any) => {
-      console.log(data);
-    });
-
     this.translate.setDefaultLang('en');
     console.log('AppConfig', AppConfig);
 

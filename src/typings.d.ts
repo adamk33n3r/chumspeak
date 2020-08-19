@@ -3,7 +3,13 @@ declare var nodeModule: NodeModule;
 interface NodeModule {
   id: string;
 }
-interface Window {
-  process: any;
-  require: any;
+import { IInterop } from '../preload';
+declare global {
+
+  interface Window {
+    process: any;
+    require: any;
+    interop: IInterop;
+  }
+
 }

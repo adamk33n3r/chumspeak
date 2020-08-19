@@ -1,7 +1,9 @@
 {
     "cSpell.words": [
+        "Prefs",
         "firestore",
-        "gravitar"
+        "gravitar",
+        "teamspeak"
     ],
     "cSpell.enabledLanguageIds": [
         "asciidoc",
@@ -35,5 +37,18 @@
         "**/*.map": true,
         "dist": true,
         "node_modules": true
-    }
+    },
+    "vsicons.associations.files": [
+        {
+            "icon": "tsconfig",
+            "extensions": [],
+            "filenamesGlob": [
+                "tsconfig.serve"
+            ],
+            "extensionsGlob": ["json"],
+            "filename": true,
+            "format": "svg"
+        }
+    ],
+    "vsicons.presets.angular": true
 }

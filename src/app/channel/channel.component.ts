@@ -45,6 +45,8 @@ export class ChannelComponent implements OnInit, OnChanges {
 
   public messageText: string = '';
 
+  private loadedMessages = 0;
+
   constructor(private $db: AngularFirestore, private $auth: AngularFireAuth, private $dialog: MatDialog) { }
 
   public ngOnInit() { }
@@ -68,9 +70,15 @@ export class ChannelComponent implements OnInit, OnChanges {
       this.channelCached = channel;
     });
 
+    this.loadMore();
+
+  }
+
+  public loadMore() {
+    this.loadedMessages += 5;
     this.messages = this.channelRef
       .collection<IMessage>('messages', (query) => {
-        return query.orderBy('timestamp');
+        return query.orderBy('timestamp').limitToLast(this.loadedMessages);
       })
       .valueChanges()
       .pipe(
@@ -89,24 +97,27 @@ export class ChannelComponent implements OnInit, OnChanges {
       )
     ;
 
+    let cap = this.loadedMessages;
     this.messages.subscribe((messages) => {
-      console.log('messages:', messages);
+      console.log('messages:', cap, messages);
     });
   }
 
   public onInputKeydown(event: KeyboardEvent) {
-    console.log(event);
     if (event.key === 'Enter' && event.shiftKey === false) {
       event.preventDefault();
-      console.log('sending message:', this.messageText);
-      this.channelRef.collection<IMessage>('messages').add(({
-        body: this.messageText,
-        said_by: this.$db.collection('users').doc(this.$auth.auth.currentUser!.uid).ref,
-        // said_by: `users/${this.$auth.auth.currentUser!.uid}`,
-        timestamp: new Date(),
-      }) as any);
-      this.messageText = '';
+      this.sendMessage();
     }
+  }
+
+  public sendMessage() {
+    console.log('sending message:', this.messageText);
+    this.channelRef.collection<IMessage>('messages').add(({
+      body: this.messageText,
+      said_by: this.$db.collection('users').doc(this.$auth.auth.currentUser!.uid).ref,
+      timestamp: firestore.Timestamp.now(),
+    }));
+    this.messageText = '';
   }
 
   public deleteChannel() {

@@ -1,0 +1,20 @@
+<h3>Notifications</h3>
+<h4>Messages</h4>
+<div fxLayout='row' fxLayoutAlign='space-between'>
+    <mat-slide-toggle [(ngModel)]='prefs.messages.mentions'>Mentions</mat-slide-toggle>
+</div>
+<br/>
+<button mat-raised-button color='primary' (click)='sendTestNotification()'>Send Test Notification</button>
+<br/>
+<br/>
+<h4>Voice Chat</h4>
+<div fxLayout='row wrap' fxLayoutAlign='space-between'>
+    <mat-slide-toggle [(ngModel)]='prefs.voiceChat.connected'>Connected</mat-slide-toggle>
+    <mat-slide-toggle [(ngModel)]='prefs.voiceChat.disconnected'>Disconnected</mat-slide-toggle>
+    <mat-slide-toggle [(ngModel)]='prefs.voiceChat.userJoined'>User Joined</mat-slide-toggle>
+    <mat-slide-toggle [(ngModel)]='prefs.voiceChat.userLeft'>User Left</mat-slide-toggle>
+</div>
+<br/>
+<button mat-raised-button color='primary' (click)='playTestNotification()'>Play Test Notification</button>
+<br/>
+<br/>

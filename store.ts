@@ -1,49 +1,148 @@
-import * as electron from 'electron';
-import * as path from 'path';
-import * as fs from 'fs';
+import { screen, remote, app } from 'electron';
+import * as Store from 'electron-store';
 
-export interface IStoreOptions {
-  configName: string;
-  defaults: object;
+export const appPrefs = () => {
+  const size = (screen || remote.screen).getPrimaryDisplay().workAreaSize;
+  return new Store<{windowBounds:{x:number,y:number,width:number,height:number}}>({
+    name: 'app-store',
+    // defaults: {
+    //   windowBounds: { x: size.width / 2, y: size.height / 2, width: 1440, height: 800 },
+    // },
+    schema: {
+      windowBounds: {
+        type: 'object',
+        default: {},
+        properties: {
+          x: {
+            type: 'number',
+            default: size.width / 2,
+          },
+          y: {
+            type: 'number',
+            default: size.height / 2,
+          },
+          width: {
+            type: 'number',
+            default: 1440,
+          },
+          height: {
+            type: 'number',
+            default: 800,
+          },
+        },
+      },
+    },
+  });
+};
+
+export interface IUserPrefs {
+  audio: {
+    captureDevice: string;
+    playbackDevice: string;
+    activationMode: 'ptt' | 'vad';
+    pttKey: string[];
+    vadLevel: number;
+    noiseSuppression: boolean;
+    echoCancellation: boolean;
+    automaticGainControl: boolean;
+  };
+  notifications: {
+    messages: {
+      mentions: boolean;
+    };
+    voiceChat: {
+      connected: boolean;
+      disconnected: boolean;
+      userJoined: boolean;
+      userLeft: boolean;
+    };
+  };
 }
 
-export class Store {
-  private path: string;
-  private data: { [key: string]: any };
-
-  constructor(opts: IStoreOptions) {
-    // Renderer process has to get `app` module via `remote`, whereas the main process can get it directly
-    // app.getPath('userData') will return a string of the user's app data directory path.
-    const userDataPath = (electron.app || electron.remote.app).getPath('userData');
-    // We'll use the `configName` property to set the file name and path.join to bring it all together as a string
-    this.path = path.join(userDataPath, opts.configName + '.json');
-
-    this.data = parseDataFile(this.path, opts.defaults);
-  }
-
-  // This will just return the property on the `data` object
-  public get(key: string) {
-    return this.data[key];
-  }
-
-  // ...and this will set it
-  public set(key: string, val: any) {
-    this.data[key] = val;
-    // Wait, I thought using the node.js' synchronous APIs was bad form?
-    // We're not writing a server so there's not nearly the same IO demand on the process
-    // Also if we used an async API and our app was quit before the asynchronous write had a chance to complete,
-    // we might lose that data. Note that in a real app, we would try/catch this.
-    fs.writeFileSync(this.path, JSON.stringify(this.data));
-  }
-}
-
-function parseDataFile(filePath: string, defaults: object) {
-  // We'll try/catch it in case the file doesn't exist yet, which will be the case on the first application run.
-  // `fs.readFileSync` will return a JSON string which we then parse into a Javascript object
-  try {
-    return JSON.parse(fs.readFileSync(filePath, { encoding: 'utf8'}));
-  } catch(error) {
-    // if there was some kind of error, return the passed in defaults instead.
-    return defaults;
-  }
-}
+export const userPrefs = new Store<IUserPrefs>({
+  name: 'user-preferences',
+  schema: {
+    audio: {
+      type: 'object',
+      additionalProperties: false,
+      default: {},
+      properties: {
+        captureDevice: {
+          type: 'string',
+          default: 'default',
+        },
+        playbackDevice: {
+          type: 'string',
+          default: 'default',
+        },
+        activationMode: {
+          type: 'string',
+          enum: ['ptt', 'vad'],
+          default: 'vad',
+        },
+        pttKey: {
+          type: 'array',
+          items: {
+            type: 'string',
+          },
+          default: ['F12'],
+        },
+        vadLevel: {
+          type: 'integer',
+          default: 0,
+        },
+        noiseSuppression: {
+          type: 'boolean',
+          default: true,
+        },
+        echoCancellation: {
+          type: 'boolean',
+          default: false,
+        },
+        automaticGainControl: {
+          type: 'boolean',
+          default: true,
+        },
+      },
+    },
+    notifications: {
+      type: 'object',
+      additionalProperties: false,
+      default: {},
+      properties: {
+        voiceChat: {
+          type: 'object',
+          default: {},
+          properties: {
+            connected: {
+              type: 'boolean',
+              default: true,
+            },
+            disconnected: {
+              type: 'boolean',
+              default: true,
+            },
+            userJoined: {
+              type: 'boolean',
+              default: true,
+            },
+            userLeft: {
+              type: 'boolean',
+              default: true,
+            },
+          },
+        },
+        messages: {
+          type: 'object',
+          default: {},
+          properties: {
+            mentions: {
+              type: 'boolean',
+              default: true,
+            },
+          },
+        },
+      },
+    },
+  },
+});
