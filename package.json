@@ -32,7 +32,7 @@
     "@angular/flex-layout": "10.0.0-beta.32",
     "electron-store": "6.0.0",
     "electron-windows-notifications": "3.0.6",
-    "matrix-js-sdk": "7.1.0",
+    "matrix-js-sdk": "19.7.0",
     "node-ts3sdk-client": "github:adamk33n3r/node-ts3sdk-client#dev"
   },
   "devDependencies": {
